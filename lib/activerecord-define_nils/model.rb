@@ -23,7 +23,7 @@ module ActiveRecordDefineNils
             class_eval "def #{attr_name}; value = super(); self.nil_definitions && self.nil_definitions[#{attr_sym.inspect}] && self.nil_definitions[#{attr_sym.inspect}].include?(value) ? nil : value; end"
           end
         else
-          raise ArgumentError.new("define_nils must at least supply :as and :for, but got #{options.inspect}")
+          raise ArgumentError.new("define_nils takes a hash with :as and :for keys, but got #{options.inspect}")
         end
       end
 
@@ -34,7 +34,7 @@ module ActiveRecordDefineNils
         self.nil_definitions.keys.each do |attr_sym|
           self.reflections.collect {|association_name, reflection|
             if reflection.macro == :belongs_to && reflection.foreign_key.to_sym == attr_sym
-              class_eval "def #{association_name}; return nil if send(#{attr_sym.inspect}).nil?; super(); end"
+              class_eval "def #{association_name}; return nil if __send__(#{attr_sym.inspect}).nil?; super(); end"
             end
           }
         end
@@ -44,45 +44,39 @@ module ActiveRecordDefineNils
 
     def read_attribute(attr_name)
       value = super(attr_name)
-      defined?(@define_nils_no_read_mod) ? value : (self.nil_definitions && self.nil_definitions[attr_name.to_sym] && self.nil_definitions[attr_name.to_sym].include?(value) ? nil : value)
+      (@define_nils_no_read_mod ||= false) ? value : (self.nil_definitions && self.nil_definitions[attr_name.to_sym] && self.nil_definitions[attr_name.to_sym].include?(value) ? nil : value)
     end
 
     private
 
     def create
-      instance_variable_set(:@define_nils_no_read_mod, true)
-      begin
-        if self.nil_saved_as
-          self.nil_saved_as.each do |column, translated_nil|
-            if respond_to?(column) && respond_to?("#{column}=") && self.send(column).nil?
-              write_attribute(column.to_s, translated_nil)
-            end
+      @define_nils_no_read_mod = true
+      if self.nil_saved_as
+        self.nil_saved_as.each do |column, translated_nil|
+          if respond_to?(column) && respond_to?("#{column}=") && self.__send__(column).nil?
+            write_attribute(column.to_s, translated_nil)
           end
         end
-
-        result = super
-      ensure
-        remove_instance_variable(:@define_nils_no_read_mod)
       end
-      result
+
+      super
+    ensure
+      @define_nils_no_read_mod = false
     end
 
     def update(*args)
-      instance_variable_set(:@define_nils_no_read_mod, true)
-      begin
-        if self.nil_saved_as
-          self.nil_saved_as.each do |column, translated_nil|
-            if respond_to?(column) && respond_to?("#{column}=") && self.send(column).nil?
-              write_attribute(column.to_s, translated_nil)
-            end
+      @define_nils_no_read_mod = true
+      if self.nil_saved_as
+        self.nil_saved_as.each do |column, translated_nil|
+          if respond_to?(column) && respond_to?("#{column}=") && self.__send__(column).nil?
+            write_attribute(column.to_s, translated_nil)
           end
         end
-        
-        result = super
-      ensure
-        remove_instance_variable(:@define_nils_no_read_mod)
       end
-      result
+      
+      super
+    ensure
+      @define_nils_no_read_mod = false
     end
   end
 end

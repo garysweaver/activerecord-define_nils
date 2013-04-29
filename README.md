@@ -47,6 +47,6 @@ Be sure to place `define_nils` above your `belongs_to` associations in the model
 
 ### License
 
-Copyright (c) 2012 Gary S. Weaver, released under the [MIT license][lic].
+Copyright (c) 2013 Gary S. Weaver, released under the [MIT license][lic].
 
 [lic]: http://github.com/garysweaver/activerecord-define_nils/blob/master/LICENSE
