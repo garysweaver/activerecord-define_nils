@@ -1,5 +1,4 @@
-Define Nils for ActiveRecord 3.x/4.x and Rails 3.x/4.x
-=====
+## Define Nils for ActiveRecord 3.x/4.x and Rails 3.x/4.x
 
 If working with a legacy database used by another application that uses a non-null value to mean null, you may need to translate certain values to nil to make them more normal to work with in Ruby/Rails and then save nil as a specific value.
 
@@ -41,7 +40,7 @@ If you are on Rails, the concern `ActiveRecordDefineNils::Model` is included aut
 
 Be sure to place `define_nils` above your `belongs_to` associations in the model class or those associations will query on unaltered foreign key values, which is probably not what you want.
 
-## Authors
+### Authors
 
 This app was written by [FineLine Prototyping, Inc.](http://www.finelineprototyping.com) by the following contributors:
 * Gary Weaver (https://github.com/garysweaver)
