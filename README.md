@@ -31,10 +31,6 @@ In your ActiveRecord/Rails 3.1+ project, add this to your Gemfile:
 
     gem 'activerecord-define_nils'
 
-For the development version:
-
-    gem 'activerecord-define_nils', :git => 'git://github.com/garysweaver/activerecord-define_nils.git'
-
 Then run:
 
     bundle install
@@ -45,8 +41,13 @@ If you are on Rails, the concern `ActiveRecordDefineNils::Model` is included aut
 
 Be sure to place `define_nils` above your `belongs_to` associations in the model class or those associations will query on unaltered foreign key values, which is probably not what you want.
 
+## Authors
+
+This app was written by [FineLine Prototyping, Inc.](http://www.finelineprototyping.com) by the following contributors:
+* Gary Weaver (https://github.com/garysweaver)
+
 ### License
 
 Copyright (c) 2013 FineLine Prototyping, Inc., released under the [MIT license][lic].
 
-[lic]: http://github.com/garysweaver/activerecord-define_nils/blob/master/LICENSE
+[lic]: http://github.com/FineLinePrototyping/activerecord-define_nils/blob/master/LICENSE
