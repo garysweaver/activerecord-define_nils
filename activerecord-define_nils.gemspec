@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = ActiveRecordDefineNils::VERSION
   s.authors     = ['Gary S. Weaver']
   s.email       = ['garysweaver@gmail.com']
-  s.homepage    = 'https://github.com/garysweaver/activerecord-define_nils'
+  s.homepage    = 'https://github.com/FineLinePrototyping/activerecord-define_nils'
   s.summary     = %q{Define nils for ActiveRecord 3.x/4.x.}
   s.description = %q{Allows you to redefine what is translated to nil on read and what is stored instead of nil for specified attributes.}
   s.files = Dir['lib/**/*'] + ['Rakefile', 'README.md']
