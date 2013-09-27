@@ -42,7 +42,7 @@ Be sure to place `define_nils` above your `belongs_to` associations in the model
 
 ### Authors
 
-This app was written by [FineLine Prototyping, Inc.](http://www.finelineprototyping.com) by the following contributors:
+This was written by [FineLine Prototyping, Inc.](http://www.finelineprototyping.com) by the following contributors:
 * Gary Weaver (https://github.com/garysweaver)
 
 ### License
